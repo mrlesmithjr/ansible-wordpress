@@ -6,3 +6,11 @@
     wordpress_apache2_web_owner: www-data
     wordpress_apache2_web_root: /var/www/html
   when: ansible_os_family == "Debian"
+
+- name: set_facts | Setting RedHat Facts
+  set_fact:
+    wordpress_apache2_log_dir: /var/log/httpd
+    wordpress_apache2_web_group: apache
+    wordpress_apache2_web_owner: apache
+    wordpress_apache2_web_root: /var/www/html
+  when: ansible_os_family == "RedHat"
