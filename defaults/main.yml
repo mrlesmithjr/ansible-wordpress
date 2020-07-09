@@ -1,11 +1,14 @@
 ---
 # defaults file for ansible-wordpress
-wordpress_db: wordpress
-wordpress_db_user: wordpress
-wordpress_db_password: wordpress
+wordpress_db_host_password: root
+wordpress_db_host_user: root
 wordpress_db_host: localhost
+wordpress_db_password: wordpress
 wordpress_db_table_prefix: wp_
+wordpress_db_user: wordpress
+wordpress_db: wordpress
 wordpress_dl_file: "wordpress-{{ wordpress_version }}.tar.gz"
 wordpress_dl_uri: https://wordpress.org
 wordpress_dl: "{{ wordpress_dl_uri }}/{{ wordpress_dl_file }}"
+wordpress_url_path: /
 wordpress_version: 4.8.3

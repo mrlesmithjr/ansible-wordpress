@@ -1,20 +1,36 @@
 ---
+- name: db | Installing python-pymysql
+  apt:
+    name: python-pymysql
+    state: present
+  become: true
+  register: result
+  until: result is successful
+  when: ansible_os_family == "Debian"
+
 - name: db | Creating {{ wordpress_db }} on {{ wordpress_db_host }}
   mysql_db:
+    login_host: "{{ wordpress_db_host }}"
+    login_password: "{{ wordpress_db_host_password }}"
+    login_user: "{{ wordpress_db_host_user }}"
     name: "{{ wordpress_db }}"
     state: present
   become: true
-  delegate_to: "{{ wordpress_db_host }}"
+  run_once: true # To account for multiple app servers
 
 - name: db | Creating {{ wordpress_db_user }} on {{ wordpress_db_host }}
   mysql_user:
     host: "{{ item }}"
+    login_host: "{{ wordpress_db_host }}"
+    login_password: "{{ wordpress_db_host_password }}"
+    login_user: "{{ wordpress_db_host_user }}"
     name: "{{ wordpress_db_user }}"
     password: "{{ wordpress_db_password }}"
     priv: "{{ wordpress_db }}.*:ALL"
     state: present
+  no_log: true
   become: true
-  delegate_to: "{{ wordpress_db_host }}"
-  with_items:
+  loop:
     - 127.0.0.1
     - "%"
+  run_once: true # To account for multiple app servers
