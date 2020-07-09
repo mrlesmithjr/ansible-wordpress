@@ -11,4 +11,4 @@ wordpress_dl_file: "wordpress-{{ wordpress_version }}.tar.gz"
 wordpress_dl_uri: https://wordpress.org
 wordpress_dl: "{{ wordpress_dl_uri }}/{{ wordpress_dl_file }}"
 wordpress_url_path: /
-wordpress_version: 4.8.3
+wordpress_version: 5.4.2

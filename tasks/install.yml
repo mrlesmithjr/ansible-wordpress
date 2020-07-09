@@ -7,6 +7,15 @@
     creates: "{{ wordpress_apache2_web_root }}/wordpress/index.php"
   become: true
 
-- name: install | Generating Wordpress Salt
-  command: curl https://api.wordpress.org/secret-key/1.1/salt/
-  register: wordpress_salt
+- name: install | Fetch random salts for wp-config.php
+  uri:
+    url: https://api.wordpress.org/secret-key/1.1/salt/
+    return_content: true
+  become: false
+  register: wordpress_salt_array
+  delegate_to: localhost
+  run_once: true # do this once to ensure all wordpress app servers are in sync
+
+- name: install | Define wordpress_salt Fact
+  set_fact:
+    wordpress_salt: "{{ wordpress_salt_array.content }}"
