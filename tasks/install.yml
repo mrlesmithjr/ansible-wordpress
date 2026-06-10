@@ -19,4 +19,4 @@
 - name: install | Define wordpress_salt Fact
   ansible.builtin.set_fact:
     wordpress_salt: "{{ wordpress_salt_array.content }}"
-  changed_when: false
+  run_once: true

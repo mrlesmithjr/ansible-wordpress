@@ -6,7 +6,6 @@
     wordpress_apache2_web_owner: www-data
     wordpress_apache2_web_root: /var/www/html
   when: ansible_os_family == "Debian"
-  changed_when: false
 
 - name: set_facts | Setting RedHat Facts
   ansible.builtin.set_fact:
@@ -15,4 +14,3 @@
     wordpress_apache2_web_owner: apache
     wordpress_apache2_web_root: /var/www/html
   when: ansible_os_family == "RedHat"
-  changed_when: false

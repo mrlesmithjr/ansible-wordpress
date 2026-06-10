@@ -8,6 +8,13 @@
   until: result is successful
   when: ansible_os_family == "Debian"
 
+- name: db | Installing python3-PyMySQL (RedHat)
+  ansible.builtin.dnf:
+    name: python3-PyMySQL
+    state: present
+  become: true
+  when: ansible_os_family == "RedHat"
+
 - name: db | Creating WordPress database on {{ wordpress_db_host }}
   ansible.mysql.mysql_db:
     login_host: "{{ wordpress_db_host }}"
