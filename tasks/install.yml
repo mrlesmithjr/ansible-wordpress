@@ -1,6 +1,6 @@
 ---
 - name: install | Downloading and Extracting Wordpress {{ wordpress_version }}
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ wordpress_dl }}"
     dest: "{{ wordpress_apache2_web_root }}/"
     remote_src: true
@@ -8,14 +8,15 @@
   become: true
 
 - name: install | Fetch random salts for wp-config.php
-  uri:
+  ansible.builtin.uri:
     url: https://api.wordpress.org/secret-key/1.1/salt/
     return_content: true
   become: false
   register: wordpress_salt_array
   delegate_to: localhost
-  run_once: true # do this once to ensure all wordpress app servers are in sync
+  run_once: true  # do this once to ensure all wordpress app servers are in sync
 
 - name: install | Define wordpress_salt Fact
-  set_fact:
+  ansible.builtin.set_fact:
     wordpress_salt: "{{ wordpress_salt_array.content }}"
+  changed_when: false

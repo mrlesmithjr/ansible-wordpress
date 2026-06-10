@@ -1,25 +1,26 @@
 ---
-- name: db | Installing python-pymysql
-  apt:
-    name: python-pymysql
+- name: db | Installing python3-pymysql
+  ansible.builtin.apt:
+    name: python3-pymysql
     state: present
   become: true
   register: result
   until: result is successful
   when: ansible_os_family == "Debian"
 
-- name: db | Creating {{ wordpress_db }} on {{ wordpress_db_host }}
-  mysql_db:
+- name: db | Creating WordPress database on {{ wordpress_db_host }}
+  ansible.mysql.mysql_db:
     login_host: "{{ wordpress_db_host }}"
     login_password: "{{ wordpress_db_host_password }}"
     login_user: "{{ wordpress_db_host_user }}"
     name: "{{ wordpress_db }}"
     state: present
   become: true
-  run_once: true # To account for multiple app servers
+  no_log: true
+  run_once: true  # To account for multiple app servers
 
-- name: db | Creating {{ wordpress_db_user }} on {{ wordpress_db_host }}
-  mysql_user:
+- name: db | Creating WordPress DB user on {{ wordpress_db_host }}
+  ansible.mysql.mysql_user:
     host: "{{ item }}"
     login_host: "{{ wordpress_db_host }}"
     login_password: "{{ wordpress_db_host_password }}"
@@ -33,4 +34,4 @@
   loop:
     - 127.0.0.1
     - "%"
-  run_once: true # To account for multiple app servers
+  run_once: true  # To account for multiple app servers

@@ -1,10 +1,18 @@
 ---
 # tasks file for ansible-wordpress
 
-- include: set_facts.yml
+- name: Include set_facts tasks
+  ansible.builtin.include_tasks:
+    file: set_facts.yml
 
-- include: db.yml
+- name: Include db tasks
+  ansible.builtin.include_tasks:
+    file: db.yml
 
-- include: install.yml
+- name: Include install tasks
+  ansible.builtin.include_tasks:
+    file: install.yml
 
-- include: config.yml
+- name: Include config tasks
+  ansible.builtin.include_tasks:
+    file: config.yml

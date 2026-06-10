@@ -1,20 +1,29 @@
+---
 galaxy_info:
   author: Larry Smith Jr.
-  description: An [Ansible](https://www.ansible.com) role to install/configure [Wordpress](https://wordpress.org)
+  namespace: mrlesmithjr
+  role_name: wordpress
+  description: An Ansible role to install and configure WordPress
 
-  license: license (MIT)
+  license: MIT
 
-  min_ansible_version: 1.2
+  min_ansible_version: "2.14"
 
   platforms:
     - name: EL
       versions:
-        - 7
+        - "8"
+        - "9"
     - name: Ubuntu
       versions:
-        - xenial
+        - focal
+        - jammy
+        - noble
 
   galaxy_tags:
     - web
+    - wordpress
+    - php
+    - mysql
 
 dependencies: []
